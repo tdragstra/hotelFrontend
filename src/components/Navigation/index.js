@@ -9,23 +9,23 @@ import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
 
 export default function Navigation() {
-  const token = useSelector(selectToken);
+	const token = useSelector(selectToken);
 
-  const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
+	const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
-  return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand as={NavLink} to="/">
-        Cool story bro!
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav style={{ width: "100%" }} fill>
-          <NavbarItem path="/" linkText="Home" />
-          {token ? <NavbarItem path="/myspace" linkText="My Space" /> : null}
-          {loginLogoutControls}
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  );
+	return (
+		<Navbar className="App" bg="light" expand="lg">
+			<Navbar.Brand as={NavLink} to="/">
+				Cool story bro!
+			</Navbar.Brand>
+			<Navbar.Toggle aria-controls="basic-navbar-nav" />
+			<Navbar.Collapse id="basic-navbar-nav">
+				<Nav style={{ width: "100%" }} fill>
+					<NavbarItem path="/" linkText="Home" />
+					{token ? <NavbarItem path="/myspace" linkText="My Space" /> : null}
+					{loginLogoutControls}
+				</Nav>
+			</Navbar.Collapse>
+		</Navbar>
+	);
 }
