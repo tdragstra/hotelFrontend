@@ -1,0 +1,32 @@
+.Counter1 {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    height: 80px;
+
+    padding: 100;
+    margin: 100;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: white;
+}
+
+
+.Close {
+    float: right;
+    height: 50px;
+    font-size: 40px;
+}
+
+/* 
+// style={{
+// 	display: "flex",
+// 	justifyContent: "center",
+// 	flexDirection: "row",
+// 	alignItems: "center",
+// 	height: "60px",
+// 	paddingLeft: 50,
+// 	border: "5px",
+// }} */

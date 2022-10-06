@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	hotelConfig: {},
 	rooms: [],
+	adults: 0,
+	children: 0,
 };
 
 export const hotelSlice = createSlice({
@@ -16,6 +18,23 @@ export const hotelSlice = createSlice({
 		hotelConfigFetched: (state, action) => {
 			state.hotelConfig = action.payload;
 		},
+		incrementA: (state, action) => {
+			state.adults += 1;
+		},
+		decrementA: (state, action) => {
+			if (state.adults !== 0) {
+				state.adults -= 1;
+			}
+		},
+		incrementC: (state, action) => {
+			state.children += 1;
+		},
+		decrementC: (state, action) => {
+			if (state.children !== 0) {
+				state.children -= 1;
+			}
+		},
+
 		// spaceUpdated: (state, action) => {
 		// 	state.allSpaces = state.allSpaces.map((space) => {
 		// 		if (space.id !== action.payload.id) {
@@ -31,7 +50,14 @@ export const hotelSlice = createSlice({
 	},
 });
 
-export const { roomsFetched, hotelConfigFetched } = hotelSlice.actions;
+export const {
+	roomsFetched,
+	hotelConfigFetched,
+	incrementA,
+	decrementA,
+	incrementC,
+	decrementC,
+} = hotelSlice.actions;
 
 export default hotelSlice.reducer;
 
