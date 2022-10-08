@@ -3,8 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	hotelConfig: {},
 	rooms: [],
-	adults: 0,
-	children: 0,
+	guests: { total: 1, adults: 1, children: 0 },
+	requests: {
+		singleBeds: false,
+		requestBalcony: false,
+		requestGroundFloor: false,
+	},
+	reservationData: { rooms: [] },
 };
 
 export const hotelSlice = createSlice({
@@ -19,19 +24,56 @@ export const hotelSlice = createSlice({
 			state.hotelConfig = action.payload;
 		},
 		incrementA: (state, action) => {
-			state.adults += 1;
+			state.guests.adults += 1;
+			state.guests.total += 1;
 		},
 		decrementA: (state, action) => {
-			if (state.adults !== 0) {
-				state.adults -= 1;
+			if (state.guests.adults !== 0) {
+				state.guests.adults -= 1;
+			}
+			if (state.guests.total !== 0) {
+				state.guests.total -= 1;
 			}
 		},
 		incrementC: (state, action) => {
-			state.children += 1;
+			state.guests.children += 1;
+			state.guests.total += 1;
 		},
 		decrementC: (state, action) => {
-			if (state.children !== 0) {
-				state.children -= 1;
+			if (state.guests.children !== 0) {
+				state.guests.children -= 1;
+			}
+			if (state.guests.total !== 0) {
+				state.guests.total -= 1;
+			}
+		},
+		changeSingle: (state, action) => {
+			state.requests.singleBeds = !state.requests.singleBeds;
+		},
+		changeBalcony: (state, action) => {
+			state.requests.requestBalcony = !state.requests.requestBalcony;
+		},
+		changeGroundFloor: (state, action) => {
+			state.requests.requestGroundFloor = !state.requests.requestGroundFloor;
+		},
+		addDateReservation: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				fromDate: action.payload.fromDate,
+				toDate: action.payload.toDate,
+			};
+		},
+		addRoomAndNumber: (state, action) => {
+			const room = state.rooms.find((e) => e.id === action.payload.id);
+			if (action.payload.number === 0) {
+				state.reservationData.rooms = state.reservationData.rooms.filter(
+					(e) => e.id !== action.payload.id
+				);
+			} else {
+				state.reservationData = {
+					...state.reservationData,
+					rooms: [...state.reservationData.rooms, room],
+				};
 			}
 		},
 
@@ -57,6 +99,11 @@ export const {
 	decrementA,
 	incrementC,
 	decrementC,
+	changeSingle,
+	changeBalcony,
+	changeGroundFloor,
+	addDateReservation,
+	addRoomAndNumber,
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

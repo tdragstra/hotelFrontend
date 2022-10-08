@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import "./app.css";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { addDateReservation } from "../../store/hotel/slice";
 
 export default function Spaces() {
 	const dispatch = useDispatch();
@@ -40,7 +43,8 @@ export default function Spaces() {
 
 	useEffect(() => {
 		dispatch(fetchAllRooms());
-	}, [dispatch]);
+		dispatch(addDateReservation({ fromDate: date, toDate: tomDate }));
+	}, [dispatch, date, tomDate]);
 
 	if (!rooms) {
 		return (
@@ -82,6 +86,11 @@ export default function Spaces() {
 								setTomDate(
 									moment(e.target.value).add(1, "days").format("YYYY-MM-DD")
 								);
+								// dispatch(
+								// 	addDateReservation({
+								// 		fromDate: e.target.value,
+								// 	})
+								// );
 							}}
 						></input>
 					</div>
@@ -138,6 +147,16 @@ export default function Spaces() {
 									/>
 								);
 							})}
+							<tr>
+								<td colSpan={5}>
+									<div>
+										<Button style={{ width: "100%" }}>
+											{" "}
+											Make reservation{" "}
+										</Button>
+									</div>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -159,3 +178,26 @@ export default function Spaces() {
 // console.log(tomorowsDate);
 
 // setTomDate(moment(e.target.value).add(1, "days").format("YYYY-MM-DD"));
+
+// {
+// 	SwitchExample({
+// 		label: "Request ground floor",
+// 		id: props.id + "groundFloor",
+// 		dispatch: changeGroundFloor(),
+// 	});
+// }
+// {
+// 	SwitchExample({
+// 		label: "Request balcony",
+// 		id: props.id + "balcony",
+// 		dispatch: changeBalcony(true),
+// 	});
+// }
+
+// {
+// 	SwitchExample({
+// 		label: "Request single beds",
+// 		id: props.id + "singleBeds",
+// 		dispatch: changeSingle(),
+// 	});
+// }

@@ -4,7 +4,11 @@ import {
 	incrementC,
 	decrementC,
 } from "../../store/hotel/slice";
-import { selectAdults, selectChildren } from "../../store/hotel/selectors";
+import {
+	selectAdults,
+	selectChildren,
+	selectTotalGuests,
+} from "../../store/hotel/selectors";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillPlusSquareFill, BsFileMinusFill } from "react-icons/bs";
@@ -14,13 +18,13 @@ import "./counter.css";
 export const Counter = () => {
 	const adults = useSelector(selectAdults);
 	const children = useSelector(selectChildren);
-	const numberOfGuests = adults + children;
+	const numberOfGuests = useSelector(selectTotalGuests);
 	const dispatch = useDispatch();
 	const [edit, setEdit] = useState(false);
 	return (
 		<div>
 			<Button onClick={() => setEdit(!edit)}>
-				<i class="ci-user"> {numberOfGuests} </i> Guests:, add guest
+				<i class="ci-user"> </i> {numberOfGuests} Guest(s), add guest {""}
 				<i class="ci-add-circle"></i>
 			</Button>
 			{edit ? (

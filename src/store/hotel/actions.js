@@ -13,6 +13,14 @@ export const fetchAllRooms = () => {
 		}
 	};
 };
+export const postNewReservation =
+	(tableId, date) => async (dispatch, getState) => {
+		const data = {
+			tableId: tableId,
+			date: date,
+		};
+		console.log(data);
+	};
 
 // export const FETCH_SPACES_SUCCESS = "FETCH_SPACES_SUCCESS";
 // export const SPACE_DETAILS_FETCHED = "SPACE_DETAILS_FETCHED";
