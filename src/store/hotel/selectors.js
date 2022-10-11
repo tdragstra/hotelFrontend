@@ -8,3 +8,4 @@ export const selectSingleBeds = (state) =>
 export const selectGroundFloor = (state) =>
 	state.hotel.requests.requestGroundFloor;
 export const selectBalcony = (state) => state.hotel.requests.requestBalcony;
+export const selectReservationData = (state) => state.hotel.reservationData;

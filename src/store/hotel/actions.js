@@ -14,10 +14,12 @@ export const fetchAllRooms = () => {
 	};
 };
 export const postNewReservation =
-	(tableId, date) => async (dispatch, getState) => {
+	(fromDate, toDate, rooms, user) => async (dispatch, getState) => {
 		const data = {
-			tableId: tableId,
-			date: date,
+			fromDate: fromDate,
+			toDate: toDate,
+			user: user,
+			rooms: [rooms],
 		};
 		console.log(data);
 	};

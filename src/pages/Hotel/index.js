@@ -2,19 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
-import { fetchAllRooms } from "../../store/hotel/actions";
+import { fetchAllRooms, postNewReservation } from "../../store/hotel/actions";
 import { selectAllRooms } from "../../store/hotel/selectors";
 import Reservation from "../../components/Reservation";
 import Steps from "../../components/Steps";
 import moment from "moment";
 import Footer from "../../components/Footer";
-import { selectAdults, selectChildren } from "../../store/hotel/selectors";
+import {
+	selectAdults,
+	selectChildren,
+	selectReservationData,
+} from "../../store/hotel/selectors";
 import { Counter } from "../../components/Counter";
-import { Link } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+// import { Link } from "react-router-dom";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownButton from "react-bootstrap/DropdownButton";
 import "./app.css";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { addDateReservation } from "../../store/hotel/slice";
 import { ReservationForm } from "../../components/ReservationForm";
@@ -22,8 +26,10 @@ import { ReservationForm } from "../../components/ReservationForm";
 export default function Spaces() {
 	const dispatch = useDispatch();
 	const rooms = useSelector(selectAllRooms);
-	const adults = useSelector(selectAdults);
-	const children = useSelector(selectChildren);
+	// const adults = useSelector(selectAdults);
+	// const children = useSelector(selectChildren);
+	const reservationData = useSelector(selectReservationData);
+	console.log(reservationData);
 
 	const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 	const [tomDate, setTomDate] = useState(
@@ -152,8 +158,10 @@ export default function Spaces() {
 							<tr>
 								<td colSpan={5}>
 									<div>
-										<Button style={{ width: "100%" }}>
-											{" "}
+										<Button
+											style={{ width: "100%" }}
+											onClick={dispatch(postNewReservation(reservationData))}
+										>
 											Make reservation{" "}
 										</Button>
 									</div>
