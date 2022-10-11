@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Jumbotron from "react-bootstrap/Jumbotron";
+// import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import { fetchAllRooms } from "../../store/hotel/actions";
 import { selectAllRooms } from "../../store/hotel/selectors";
@@ -17,6 +17,7 @@ import "./app.css";
 import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { addDateReservation } from "../../store/hotel/slice";
+import { ReservationForm } from "../../components/ReservationForm";
 
 export default function Spaces() {
 	const dispatch = useDispatch();
@@ -59,12 +60,13 @@ export default function Spaces() {
 	}
 	return (
 		<>
-			<Jumbotron className="App">
+			{/* <Jumbotron className="App">
 				<h1>Banner</h1>
-			</Jumbotron>
+			</Jumbotron> */}
 
 			<Container>
 				<Steps />
+				<ReservationForm />
 				<hr />
 				<br />
 				<div
