@@ -20,11 +20,12 @@ export const postNewReservation = (e) => async (dispatch, getState) => {
 		user: e.user,
 		rooms: e.rooms,
 	};
-	console.log(data);
+	console.log("bla", data);
+	console.log("string", e);
 	try {
-		const response = await axios.post(`${apiUrl}/createReservation`);
+		const response = await axios.post(`${apiUrl}/createReservation`, { e });
 
-		console.log(response.data);
+		console.log("data", response.data);
 	} catch (e) {
 		console.log("erreur in je eur", e.message);
 	}

@@ -10,6 +10,7 @@ const initialState = {
 		requestGroundFloor: false,
 	},
 	reservationData: { rooms: [], user: {} },
+	step: "reservation",
 };
 
 export const hotelSlice = createSlice({
@@ -82,6 +83,9 @@ export const hotelSlice = createSlice({
 				user: action.payload,
 			};
 		},
+		updateStep: (state, action) => {
+			state.step = action.payload;
+		},
 
 		// spaceUpdated: (state, action) => {
 		// 	state.allSpaces = state.allSpaces.map((space) => {
@@ -111,6 +115,7 @@ export const {
 	addDateReservation,
 	addRoomAndNumber,
 	addUserInfo,
+	updateStep,
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;
