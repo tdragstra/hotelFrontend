@@ -2,28 +2,38 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 // import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
-import { fetchAllRooms } from "../../store/hotel/actions";
+import { fetchAllRooms, postNewReservation } from "../../store/hotel/actions";
 import { selectAllRooms } from "../../store/hotel/selectors";
 import Reservation from "../../components/Reservation";
 import Steps from "../../components/Steps";
 import moment from "moment";
 import Footer from "../../components/Footer";
-import { selectAdults, selectChildren } from "../../store/hotel/selectors";
+import {
+	selectAdults,
+	selectChildren,
+	selectReservationData,
+} from "../../store/hotel/selectors";
 import { Counter } from "../../components/Counter";
-import { Link } from "react-router-dom";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+// import { Link } from "react-router-dom";
+// import Dropdown from "react-bootstrap/Dropdown";
+// import DropdownButton from "react-bootstrap/DropdownButton";
 import "./app.css";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 import { Button } from "react-bootstrap";
 import { addDateReservation } from "../../store/hotel/slice";
 import { ReservationForm } from "../../components/ReservationForm";
+import { selectStep } from "../../store/hotel/selectors";
+import { updateStep } from "../../store/hotel/slice";
+import { ReservationConfirm } from "../../components/ReservationConfirm";
 
 export default function Spaces() {
 	const dispatch = useDispatch();
 	const rooms = useSelector(selectAllRooms);
-	const adults = useSelector(selectAdults);
-	const children = useSelector(selectChildren);
+	const step = useSelector(selectStep);
+	// const adults = useSelector(selectAdults);
+	// const children = useSelector(selectChildren);
+	const reservationData = useSelector(selectReservationData);
+	console.log(reservationData);
 
 	const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 	const [tomDate, setTomDate] = useState(
@@ -41,6 +51,12 @@ export default function Spaces() {
 		const cancelDate = moment(e).subtract(2, "days").format("DD-MM-YYYY");
 		return cancelDate;
 	};
+
+	// const hideAll = (step) => {
+	// 	if (step === { step }) {
+	// 		return "initial";
+	// 	} else return "none";
+	// };
 
 	useEffect(() => {
 		dispatch(fetchAllRooms());
@@ -64,9 +80,15 @@ export default function Spaces() {
 				<h1>Banner</h1>
 			</Jumbotron> */}
 
-			<Container>
+			<Container
+				style={{
+					backgroundColor: "#f7f5f5",
+					padding: 20,
+					marginTop: 10,
+					marginBottom: 20,
+				}}
+			>
 				<Steps />
-				<ReservationForm />
 				<hr />
 				<br />
 				<div
@@ -112,56 +134,85 @@ export default function Spaces() {
 						></input>
 					</div>
 				</div>
-
 				<Counter />
-
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr
-								style={{
-									height: "100px",
-									backgroundColor: "lightgrey",
-								}}
-							>
-								<th>Room</th>
-								<th>Sleeps</th>
-								<th>Today's price</th>
-								<th>Choices</th>
-								<th>Select rooms</th>
-							</tr>
-						</thead>
-						<tbody>
-							{rooms.map((r) => {
-								return (
-									<Reservation
-										key={r.id}
-										id={r.id}
-										title={r.roomType.name}
-										size={r.size}
-										price={r.roomType.price}
-										option={r.roomType.options}
-										capacityF={sleeps}
-										capacity={r.roomType.capacity}
-										singleBeds={r.roomType.singleBeds}
-										freeCancel={freeCancelCheck(date)}
-										available={r.roomType.available}
-									/>
-								);
-							})}
-							<tr>
-								<td colSpan={5}>
-									<div>
-										<Button style={{ width: "100%" }}>
-											{" "}
-											Make reservation{" "}
-										</Button>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				{/* {step !== "completion" ? ( */}
+				<div>
+					<div
+						class="table-responsive"
+						// style={{ display: hideAll("reservation") }}
+						style={{ display: step === "reservation" ? "initial" : "none" }}
+					>
+						<table class="table">
+							<thead>
+								<tr
+									style={{
+										height: "75px",
+										backgroundColor: "4b566b",
+									}}
+								>
+									<th>Room</th>
+									<th>Sleeps</th>
+									<th>Today's price</th>
+									<th>Choices</th>
+									<th>Select rooms</th>
+								</tr>
+							</thead>
+							<tbody>
+								{rooms.map((r) => {
+									return (
+										<Reservation
+											key={r.id}
+											id={r.id}
+											title={r.roomType.name}
+											size={r.size}
+											price={r.roomType.price}
+											option={r.roomType.options}
+											capacityF={sleeps}
+											capacity={r.roomType.capacity}
+											singleBeds={r.roomType.singleBeds}
+											freeCancel={freeCancelCheck(date)}
+											available={r.roomType.available}
+										/>
+									);
+								})}
+								<tr>
+									<td colSpan={5}>
+										<div>
+											<Button
+												style={{ width: "100%" }}
+												onClick={
+													() => {
+														dispatch(updateStep("details"));
+													}
+													// dispatch(postNewReservation(reservationData))
+												}
+											>
+												Make reservation{" "}
+											</Button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div
+						style={{ display: step === "details" ? "initial" : "none" }}
+						// style={{ display: hideAll("details") }}
+					>
+						<ReservationForm />
+					</div>
+					<div
+						style={{ display: step === "completion" ? "initial" : "none" }}
+						// style={{ display: hideAll("completion") }}
+					>
+						<ReservationConfirm />
+					</div>
 				</div>
+				{/* ) : (
+					<div>
+						<ReservationConfirm />
+					</div>
+				)} */}
 			</Container>
 			<Footer />
 		</>

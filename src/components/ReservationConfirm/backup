@@ -1,0 +1,46 @@
+<!-- <div className="table-responsive">
+			<table class="table">
+				<thead>
+					<tr
+						style={{
+							height: "100px",
+							backgroundColor: "lightgrey",
+						}}
+					>
+						<th>Room</th>
+						<th>Sleeps</th>
+						<th>Today's price</th>
+						<th>Choices</th>
+						<th>Select rooms</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{reservationData.rooms.map((r) => {
+						return <tr>{r.roomType.name}</tr>;
+					})}
+					<tr>
+						<td colSpan={5}>
+							<div>
+								<Button
+									style={{
+										width: "100%",
+									}}
+									onClick={
+										() => {
+											dispatch(updateStep("completion"));
+										}
+
+										// dispatch(postNewReservation(reservationData))
+									}
+								>
+									Make reservation{" "}
+								</Button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	);
+}; -->

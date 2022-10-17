@@ -7,20 +7,33 @@ import { selectToken } from "../../store/user/selectors";
 import NavbarItem from "./NavbarItem";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
-
+import "./index.css";
 export default function Navigation() {
 	const token = useSelector(selectToken);
 
 	const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
 	return (
-		<Navbar className="App" bg="light" expand="lg">
+		<Navbar
+			style={{
+				backgroundColor: "black",
+				width: "100%",
+				display: "flex",
+				flexDirection: "row-reverse",
+			}}
+		>
 			<Navbar.Brand as={NavLink} to="/">
-				Cool story bro!
+				Gasthaus Moser
 			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
-				<Nav style={{ width: "100%" }} fill>
+				<Nav
+					fill
+					style={{
+						backgroundColor: "",
+						width: "50%",
+					}}
+				>
 					<NavbarItem path="/" linkText="Home" />
 					{token ? <NavbarItem path="/myspace" linkText="My Space" /> : null}
 					{loginLogoutControls}

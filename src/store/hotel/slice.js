@@ -9,7 +9,8 @@ const initialState = {
 		requestBalcony: false,
 		requestGroundFloor: false,
 	},
-	reservationData: { rooms: [] },
+	reservationData: { rooms: [], user: {} },
+	step: "reservation",
 };
 
 export const hotelSlice = createSlice({
@@ -76,6 +77,15 @@ export const hotelSlice = createSlice({
 				};
 			}
 		},
+		addUserInfo: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				user: action.payload,
+			};
+		},
+		updateStep: (state, action) => {
+			state.step = action.payload;
+		},
 
 		// spaceUpdated: (state, action) => {
 		// 	state.allSpaces = state.allSpaces.map((space) => {
@@ -104,6 +114,8 @@ export const {
 	changeGroundFloor,
 	addDateReservation,
 	addRoomAndNumber,
+	addUserInfo,
+	updateStep,
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

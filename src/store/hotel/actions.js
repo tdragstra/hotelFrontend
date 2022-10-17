@@ -13,14 +13,23 @@ export const fetchAllRooms = () => {
 		}
 	};
 };
-export const postNewReservation =
-	(tableId, date) => async (dispatch, getState) => {
-		const data = {
-			tableId: tableId,
-			date: date,
-		};
-		console.log(data);
+export const postNewReservation = (e) => async (dispatch, getState) => {
+	const data = {
+		fromDate: e.fromDate,
+		toDate: e.toDate,
+		user: e.user,
+		rooms: e.rooms,
 	};
+	console.log("bla", data);
+	console.log("string", e);
+	try {
+		const response = await axios.post(`${apiUrl}/createReservation`, { e });
+
+		console.log("data", response.data);
+	} catch (e) {
+		console.log("erreur in je eur", e.message);
+	}
+};
 
 // export const FETCH_SPACES_SUCCESS = "FETCH_SPACES_SUCCESS";
 // export const SPACE_DETAILS_FETCHED = "SPACE_DETAILS_FETCHED";
