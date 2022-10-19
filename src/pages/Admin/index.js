@@ -1,167 +1,105 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
+import { login } from "../../store/user/actions";
+import { selectToken } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	createFeature,
-	deleteFeature,
-	deleteReservation,
-	fetchFeatures,
-	fetchReservations,
-	updateReservation,
-} from "../../store/admin/actions";
-import { selectReservations } from "../../store/admin/selectors";
-import { useForm } from "react-hook-form";
-import { Button } from "react-bootstrap";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Col } from "react-bootstrap";
+import { selectPage } from "../../store/admin/selectors";
+import AdminReservations from "./reservations";
+import AdminFeatures from "./features";
+import { changePage } from "../../store/admin/slice";
 
 export default function AdminHome() {
-	const [location, setLocation] = useState(false);
-	const handleOnChange = (event) => {
-		setLocation({ value: event.target.value });
-	};
-	const reservations = useSelector(selectReservations);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	const dispatch = useDispatch();
-	const { register, handleSubmit, formState } = useForm({
-		defaultValues: {
-			type: "feature",
-			distanceTo: null,
-		},
-	});
+	const token = useSelector(selectToken);
+	const page = useSelector(selectPage);
+	const { pathname } = useLocation();
 
-	// console.log(errors);
-	const errors = formState.errors;
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		dispatch(fetchReservations());
-		dispatch(fetchFeatures());
-	}, []);
+		if (token !== null) {
+			navigate("/");
+		}
+		if (pathname === "/admin/reservations") {
+			dispatch(changePage("reservations"));
+		}
+		if (pathname === "/admin/features") {
+			dispatch(changePage("features"));
+		}
+	}, [token, navigate, pathname, dispatch]);
+
+	function submitForm(event) {
+		event.preventDefault();
+
+		dispatch(login(email, password));
+
+		setEmail("");
+		setPassword("");
+	}
+
+	if (page === "reservations") {
+		return <AdminReservations />;
+	}
+
+	if (page === "features") {
+		return <AdminFeatures />;
+	}
 
 	return (
 		<div
 			style={{
+				backgroundColor: "white",
+				minHeight: "500px",
 				display: "flex",
 				flexDirection: "column",
 				justifyContent: "center",
-				alignItems: "center",
-				backgroundColor: "white",
-				width: "50%",
+				marginTop: "10%",
+
+				// display: "flow",
+				// justifyContent: "center",
 			}}
 		>
-			<h1> admin </h1>
-			<button
-				onClick={() => {
-					dispatch(
-						createFeature({
-							name: "Bla Restaurant",
-							type: "location",
-							distanceTo: 2.3,
-						})
-					);
-				}}
-			>
-				Create feature
-			</button>
-			<div>
-				<form
-					onSubmit={handleSubmit((data) => {
-						console.log("data", data);
-						dispatch(createFeature(data));
-					})}
-				>
-					<div style={{ display: "flex", marginRight: "5px" }}>
-						<div>
-							<h3> Add feature </h3>
-							<label>Enter title of feature:</label> <br />
-							<input
-								{...register("name", {
-									required: "Title is required",
-								})}
-								placeholder="ex. Swimming pool"
-								// value={date}
-							/>
-							<p> {errors?.name?.message}</p>
-							<label>Type:</label>{" "}
-							<select {...register("type", {})} onChange={handleOnChange}>
-								<option
-									value="location"
-									// onChange={() => setLocation(!location)}
-								>
-									Location
-								</option>
-								<option value="feature">Feature</option>
-								<option value="house rules">House rules</option>
-							</select>
-							<p> {errors?.type?.message}</p>
-							{location.value === "location" ? (
-								<p>
-									<label>Distance to location:</label>
-									<br />
-									<input
-										{...register("distanceTo", {})}
-										placeholder="5"
-									></input>{" "}
-									KM
-									<p> {errors?.distanceTo?.message}</p>
-								</p>
-							) : (
-								""
-							)}
-							<Button type="submit"> Add feature </Button>
-							<br />
-							<br />
-						</div>
-					</div>
-				</form>
-			</div>
-			<button
-				onClick={() => {
-					dispatch(deleteFeature(8));
-				}}
-			>
-				Delete feature
-			</button>
-			<button
-				onClick={() => {
-					dispatch(
-						updateReservation(5, {
-							fromDate: "2023-12-16",
-							toDate: "2024-12-17",
-							totalPrice: 250,
-							adults: 5,
-							children: 2,
-							reservationRooms: [
-								{
-									roomId: 3,
-									singleBeds: true,
-									requestBalcony: true,
-									requestGroundFloor: false,
-								},
-								{
-									roomId: 1,
-									singleBeds: false,
-									requestBalcony: false,
-									requestGroundFloor: true,
-								},
-								{
-									roomId: 1,
-									singleBeds: true,
-									requestBalcony: true,
-									requestGroundFloor: true,
-								},
-							],
-							// rooms: [{ roomTypeId: 1 }, { roomTypeId: 2 }],
-						})
-					);
-				}}
-			>
-				Update reservation
-			</button>
-			<button
-				onClick={() => {
-					dispatch(deleteReservation(4));
-				}}
-			>
-				{" "}
-				Delete reservation{" "}
-			</button>
+			<Container>
+				<Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
+					<h1 className="mt-5 mb-5"> Login as administrator</h1>
+					<Form.Group controlId="formBasicEmail">
+						<Form.Label>Email address</Form.Label>
+						<Form.Control
+							value={email}
+							onChange={(event) => setEmail(event.target.value)}
+							type="email"
+							placeholder="Enter email"
+							required
+						/>
+					</Form.Group>
+
+					<Form.Group controlId="formBasicPassword">
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							value={password}
+							onChange={(event) => setPassword(event.target.value)}
+							type="password"
+							placeholder="Password"
+							required
+						/>
+					</Form.Group>
+					<Form.Group className="mt-5">
+						<Button variant="primary" type="submit" onClick={submitForm}>
+							Log in
+						</Button>
+					</Form.Group>
+					<br />
+					<Link to="/" style={{ textAlign: "center" }}>
+						Not an administrator?
+					</Link>
+				</Form>
+			</Container>
 		</div>
 	);
 }

@@ -66,7 +66,7 @@ export default function Spaces() {
 	if (!rooms) {
 		return (
 			<div
-				class="spinner-border"
+				className="spinner-border"
 				style={{ width: "3rem", height: "3rem" }}
 				role="status"
 			>

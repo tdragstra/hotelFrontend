@@ -2,13 +2,19 @@ import axios from "axios";
 import { apiUrl } from "../../config/constants";
 import { appLoading, appDoneLoading, setMessage } from "../appState/slice";
 import { showMessageWithTimeout } from "../appState/actions";
-import { featureCreated, featureDeleted, reservationsFetched } from "./slice";
+import {
+	featureCreated,
+	featureDeleted,
+	featuresFetched,
+	reservationDelete,
+	reservationsFetched,
+} from "./slice";
 
 export const fetchFeatures = () => {
 	return async (dispatch, getState) => {
 		try {
 			const response = await axios.get(`${apiUrl}/admin/features`);
-			console.log(response.data);
+			dispatch(featuresFetched(response.data));
 		} catch (e) {
 			console.log("error", e.message);
 		}
@@ -84,8 +90,8 @@ export const deleteReservation = (id) => {
 			const response = await axios.delete(
 				`${apiUrl}/admin/reservations/delete/${id}`
 			);
-
-			console.log(response.data);
+			dispatch(reservationDelete(response.data.reservation));
+			dispatch(showMessageWithTimeout("success", true, response.data.message));
 		} catch (e) {
 			console.log("error", e.message);
 		}

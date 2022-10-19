@@ -4,6 +4,7 @@ const initialState = {
 	reservations: [],
 	users: [],
 	features: [],
+	page: "login",
 };
 
 export const adminSlice = createSlice({
@@ -11,8 +12,7 @@ export const adminSlice = createSlice({
 	initialState,
 	reducers: {
 		reservationsFetched: (state, action) => {
-			state.reservations = [state.reservations, action.payload.reservation];
-			state.users = [...state.users, action.payload.user1];
+			state.reservations = action.payload;
 		},
 		reservationDelete: (state, action) => {
 			const { id } = action.payload;
@@ -34,6 +34,11 @@ export const adminSlice = createSlice({
 		featureDeleted: (state, action) => {
 			state.features = state.features.filter((f) => f.id !== action.payload.id);
 		},
+		changePage: (state, action) => {
+			if (action.payload !== state.page) {
+				state.page = action.payload;
+			}
+		},
 	},
 });
 
@@ -44,6 +49,7 @@ export const {
 	featuresFetched,
 	featureCreated,
 	featureDeleted,
+	changePage,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;
