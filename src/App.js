@@ -1,36 +1,47 @@
 import React, { useEffect } from "react";
 import "./App.css";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Loading from "./components/Loading";
 import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Hotel from "./pages/Hotel";
+import AdminHome from "./pages/Admin";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 import CarouselFadeExample from "./components/Banner";
+import AdminReservations from "./pages/Admin/reservations";
+import AdminFeatures from "./pages/Admin/features";
+
 function App() {
 	const dispatch = useDispatch();
 	const isLoading = useSelector(selectAppLoading);
+	const { pathname } = useLocation();
+	console.log("path", pathname);
 
 	useEffect(() => {
 		dispatch(getUserWithStoredToken());
 	}, [dispatch]);
 
 	return (
-		<div className="d-flex flex-column justify-content-center w-100 h-100">
-			<Navigation />
-			<CarouselFadeExample />
+		<div className="app">
+			{pathname === "/" && <Navigation />}
+
+			{pathname === "/" && <CarouselFadeExample />}
 			<MessageBox />
 			{isLoading ? <Loading /> : null}
 			<Routes>
 				<Route exact path="/" element={<Hotel />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/admin" element={<AdminHome />}>
+					<Route path="reservations" element={<AdminReservations />} />
+					<Route path="features" element={<AdminFeatures />} />
+				</Route>
 			</Routes>
 		</div>
 	);
@@ -38,8 +49,16 @@ function App() {
 
 export default App;
 
-{
-	/* <div class="d-flex flex-column justify-content-center w-100 h-100">
+// const { pathname } = useLocation();
+//   console.log("path", pathname);
+
+//   return (
+//     <div className="App">
+//       {pathname.includes("admin") && <NavBar />}
+
+// {
+
+/* <div class="d-flex flex-column justify-content-center w-100 h-100">
 
 	<div class="d-flex flex-column justify-content-center align-items-center">
 		<h1 class="fw-light text-white m-0">Pure CSS Gradient Background Animation</h1>
@@ -53,4 +72,3 @@ export default App;
 	</div>
 </div>
 </div> */
-}

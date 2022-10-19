@@ -1,0 +1,14 @@
+.Close {
+    float: left;
+    height: 50px;
+    font-size: 40px;
+}
+
+.Edit {
+    width: 2000px;
+    background-color: black;
+}
+
+.p {
+    font-weight: bold;
+}
