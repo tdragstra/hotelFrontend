@@ -8,6 +8,7 @@ import MessageBox from "./components/MessageBox";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Hotel from "./pages/Hotel";
+import AdminHome from "./pages/Admin";
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
@@ -31,6 +32,7 @@ function App() {
 				<Route exact path="/" element={<Hotel />} />
 				<Route path="/signup" element={<SignUp />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/admin" element={<AdminHome />} />
 			</Routes>
 		</div>
 	);

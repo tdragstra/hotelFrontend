@@ -1,6 +1,7 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
 import { roomsFetched } from "./slice";
+import { reservationsFetched } from "../admin/slice";
 
 export const fetchAllRooms = () => {
 	return async (dispatch, getState) => {
@@ -14,17 +15,16 @@ export const fetchAllRooms = () => {
 	};
 };
 export const postNewReservation = (e) => async (dispatch, getState) => {
-	const data = {
-		fromDate: e.fromDate,
-		toDate: e.toDate,
-		user: e.user,
-		rooms: e.rooms,
-	};
-	console.log("bla", data);
-	console.log("string", e);
+	// const data = {
+	// 	fromDate: e.fromDate,
+	// 	toDate: e.toDate,
+	// 	user: e.user,
+	// 	rooms: e.rooms,
+	// };
+	// console.log("bla", data);
+	// console.log("string", e);
 	try {
 		const response = await axios.post(`${apiUrl}/createReservation`, { e });
-
 		console.log("data", response.data);
 	} catch (e) {
 		console.log("erreur in je eur", e.message);

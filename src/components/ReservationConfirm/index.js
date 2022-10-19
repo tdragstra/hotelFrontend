@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { postNewReservation } from "../../store/hotel/actions";
 import { selectReservationData, selectStep } from "../../store/hotel/selectors";
 import { updateStep } from "../../store/hotel/slice";
 
@@ -93,6 +94,7 @@ export const ReservationConfirm = () => {
 					onClick={
 						() => {
 							dispatch(updateStep("completion"));
+							dispatch(postNewReservation(reservationData));
 						}
 
 						// dispatch(postNewReservation(reservationData))
