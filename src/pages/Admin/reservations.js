@@ -14,9 +14,10 @@ import {
 } from "../../store/admin/selectors";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
-import { emphasize } from "@mui/material";
-import { width } from "@mui/system";
 import Container from "react-bootstrap/Container";
+import Loading from "../../components/Loading";
+import { DetailsEditForm } from "../../components/DetailsEditForm";
+import "./index.css";
 
 export default function AdminReservations() {
 	const [location, setLocation] = useState(false);
@@ -24,8 +25,7 @@ export default function AdminReservations() {
 		setLocation({ value: event.target.value });
 	};
 	const reservations = useSelector(selectReservations);
-	console.log("reservations", reservations);
-	const features = useSelector(selectFeatures);
+
 	const dispatch = useDispatch();
 	const { register, handleSubmit, formState } = useForm({
 		defaultValues: {
@@ -41,6 +41,10 @@ export default function AdminReservations() {
 		dispatch(fetchReservations());
 		dispatch(fetchFeatures());
 	}, [dispatch]);
+	console.log("wtf", reservations);
+	if (!reservations) {
+		return <Loading />;
+	}
 
 	return (
 		<Container
@@ -88,35 +92,54 @@ export default function AdminReservations() {
 											ReservationId: {e.id}. {e.user.firstName}{" "}
 											{e.user.lastName}
 										</h6>
+										<div className="Status"> STATUS: {e.status.name}</div>
+
 										<div style={{ display: "flex" }}>
 											<p>From: {e.fromDate}</p> - <p>To: {e.toDate}</p>{" "}
 										</div>
-										{e.rooms.map((e) => (
-											<div>
-												{e.roomType.name}
-												{e.reservationRoom.requestBalcony ||
-												e.reservationRoom.requestSingleBeds ||
-												e.reservationRoom.requestGroundFloor ? (
-													<div style={{ display: "flex" }}>
-														<h6>Special requests: </h6>{" "}
-														<p>
-															{e.reservationRoom.requestBalcony
-																? "Balcony, "
-																: ""}
-															{e.reservationRoom.singleBeds
-																? "Single beds, "
-																: ""}
-															{e.reservationRoom.requestGroundFloor
-																? "Ground floor, "
-																: ""}
-														</p>
-													</div>
-												) : (
-													""
-												)}
-											</div>
-										))}
-
+										<div
+											style={{
+												width: "150%",
+											}}
+										>
+											Estimated arrival time: {e.arrivalTime}
+											<DetailsEditForm
+												firstName={e.user.firstName}
+												lastName={e.user.lastName}
+												address1={e.user.address1}
+												houseNumber={e.user.houseNumber1}
+												emailAddress={e.user.email}
+											/>
+											<br></br>
+											<h6> Rooms reserved: </h6>
+											{e.reservationRooms.map((e) => (
+												<div>
+													<p
+														style={{
+															textTransform: "uppercase",
+															color: "black",
+														}}
+													>
+														{e.room.roomType.name}
+													</p>
+													{e.requestBalcony ||
+													e.requestSingleBeds ||
+													e.requestGroundFloor ? (
+														<div style={{ display: "flex" }}>
+															<h6>Special requests: </h6>{" "}
+															<p>
+																{e.requestBalcony ? "Balcony, " : ""}
+																{e.singleBeds ? "Single beds, " : ""}
+																{e.requestGroundFloor ? "Ground floor, " : ""}
+															</p>
+														</div>
+													) : (
+														""
+													)}
+													<hr></hr>
+												</div>
+											))}
+										</div>
 										{/* <h6> Rooms </h6>
 									{e.reservations.rooms.map((e) => (
 										<p>Room: {e.roomId}</p>
@@ -213,7 +236,7 @@ export default function AdminReservations() {
 				<button
 					onClick={() => {
 						dispatch(
-							updateReservation(6, {
+							updateReservation(12, {
 								fromDate: "2023-12-16",
 								toDate: "2024-12-17",
 								totalPrice: 250,

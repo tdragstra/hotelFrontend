@@ -1,0 +1,11 @@
+.Status {
+    color: white;
+    background-color: slategray;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 15px;
+    padding: 5px;
+    width: 100%;
+    border: 1in;
+    opacity: 0.5;
+}

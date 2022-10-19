@@ -107,7 +107,6 @@ export const getUserWithStoredToken = () => {
 			dispatch(
 				tokenStillValid({
 					user: response.data.user,
-					space: response.data.space,
 				})
 			);
 			dispatch(appDoneLoading());
@@ -122,38 +121,38 @@ export const getUserWithStoredToken = () => {
 	};
 };
 
-export const updateMySpace = (title, description, backgroundColor, color) => {
-	return async (dispatch, getState) => {
-		try {
-			const { space, token } = getState().user;
-			dispatch(appLoading());
+// export const updateMySpace = (title, description, backgroundColor, color) => {
+// 	return async (dispatch, getState) => {
+// 		try {
+// 			const { space, token } = getState().user;
+// 			dispatch(appLoading());
 
-			const response = await axios.patch(
-				`${apiUrl}/spaces/${space.id}`,
-				{
-					title,
-					description,
-					backgroundColor,
-					color,
-				},
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-			// console.log(response);
+// 			const response = await axios.patch(
+// 				`${apiUrl}/spaces/${space.id}`,
+// 				{
+// 					title,
+// 					description,
+// 					backgroundColor,
+// 					color,
+// 				},
+// 				{
+// 					headers: {
+// 						Authorization: `Bearer ${token}`,
+// 					},
+// 				}
+// 			);
+// 			// console.log(response);
 
-			dispatch(
-				showMessageWithTimeout("success", false, "update successfull", 3000)
-			);
-			dispatch(spaceUpdated(response.data.space));
-			dispatch(appDoneLoading());
-		} catch (e) {
-			console.log(e.message);
-		}
-	};
-};
+// 			dispatch(
+// 				showMessageWithTimeout("success", false, "update successfull", 3000)
+// 			);
+// 			dispatch(spaceUpdated(response.data.space));
+// 			dispatch(appDoneLoading());
+// 		} catch (e) {
+// 			console.log(e.message);
+// 		}
+// 	};
+// };
 
 // export const postStory = (name, content, imageUrl) => {
 // 	return async (dispatch, getState) => {
@@ -188,28 +187,28 @@ export const updateMySpace = (title, description, backgroundColor, color) => {
 // 	};
 // };
 
-export const deleteStory = (storyId) => {
-	return async (dispatch, getState) => {
-		dispatch(appLoading());
-		const { space, token } = getState().user;
-		const spaceId = space.id;
-		// make an axios request to delete
-		// and console.log the response if success
-		try {
-			const response = await myAxios.delete(
-				`/spaces/${spaceId}/stories/${storyId}`,
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
+// export const deleteStory = (storyId) => {
+// 	return async (dispatch, getState) => {
+// 		dispatch(appLoading());
+// 		const { space, token } = getState().user;
+// 		const spaceId = space.id;
+// 		// make an axios request to delete
+// 		// and console.log the response if success
+// 		try {
+// 			const response = await myAxios.delete(
+// 				`/spaces/${spaceId}/stories/${storyId}`,
+// 				{
+// 					headers: {
+// 						Authorization: `Bearer ${token}`,
+// 					},
+// 				}
+// 			);
 
-			console.log("Story deleted?", response.data);
-			dispatch(storyDeleteSuccess(storyId));
-			dispatch(appDoneLoading());
-		} catch (e) {
-			console.error(e);
-		}
-	};
-};
+// 			console.log("Story deleted?", response.data);
+// 			dispatch(storyDeleteSuccess(storyId));
+// 			dispatch(appDoneLoading());
+// 		} catch (e) {
+// 			console.error(e);
+// 		}
+// 	};
+// };

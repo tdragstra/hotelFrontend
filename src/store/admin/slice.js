@@ -5,6 +5,7 @@ const initialState = {
 	users: [],
 	features: [],
 	page: "login",
+	reservationData: { roomReservations: [], user: {} },
 };
 
 export const adminSlice = createSlice({
@@ -39,6 +40,31 @@ export const adminSlice = createSlice({
 				state.page = action.payload;
 			}
 		},
+		addTotalPrice: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				totalPrice: action.payload.totalPrice,
+			};
+		},
+		addDateReservation: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				fromDate: action.payload.fromDate,
+				toDate: action.payload.toDate,
+			};
+		},
+		addRoomsAndRequests: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				roomReservations: [action.payload.roomReservations],
+			};
+		},
+		addUserInfo: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				user: action.payload.user,
+			};
+		},
 	},
 });
 
@@ -50,6 +76,10 @@ export const {
 	featureCreated,
 	featureDeleted,
 	changePage,
+	addUserInfo,
+	addRoomsAndRequests,
+	addDateReservation,
+	addTotalPrice,
 } = adminSlice.actions;
 
 export default adminSlice.reducer;

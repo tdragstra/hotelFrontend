@@ -11,17 +11,20 @@ import { selectPage } from "../../store/admin/selectors";
 import AdminReservations from "./reservations";
 import AdminFeatures from "./features";
 import { changePage } from "../../store/admin/slice";
+import LoggedIn from "../../components/Navigation/LoggedIn";
+import LoggedOut from "../../components/Navigation/LoggedOut";
 
 export default function AdminHome() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [email, setEmail] = useState("timbo040@gmail.com");
+	const [password, setPassword] = useState("123");
 	const dispatch = useDispatch();
 	const token = useSelector(selectToken);
+	console.log(token);
 	const page = useSelector(selectPage);
 	const { pathname } = useLocation();
 
 	const navigate = useNavigate();
-
+	const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 	useEffect(() => {
 		if (token !== null) {
 			navigate("/");
@@ -66,6 +69,7 @@ export default function AdminHome() {
 			}}
 		>
 			<Container>
+				<div>{loginLogoutControls}</div>
 				<Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
 					<h1 className="mt-5 mb-5"> Login as administrator</h1>
 					<Form.Group controlId="formBasicEmail">
