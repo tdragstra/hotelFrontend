@@ -30,7 +30,7 @@ export default function Steps() {
 					<span class="step-count">1</span>
 				</div>
 				<div class="step-label">
-					<i class="ci-cart"></i>
+					<i class="ci-store"></i>
 					Book your room
 				</div>
 			</Link>
@@ -82,7 +82,7 @@ export default function Steps() {
 					<span class="step-count">3</span>
 				</div>
 				<div class="step-label">
-					<i class="ci-package"></i>
+					<i class="ci-briefcase"></i>
 					Last step
 				</div>
 			</Link>

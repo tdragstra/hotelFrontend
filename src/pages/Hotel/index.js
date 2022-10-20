@@ -25,6 +25,8 @@ import { ReservationForm } from "../../components/ReservationForm";
 import { selectStep } from "../../store/hotel/selectors";
 import { updateStep } from "../../store/hotel/slice";
 import { ReservationConfirm } from "../../components/ReservationConfirm";
+import Leaflet from "../../components/Map";
+import Features from "../../components/Features";
 
 export default function Spaces() {
 	const dispatch = useDispatch();
@@ -208,12 +210,12 @@ export default function Spaces() {
 						<ReservationConfirm />
 					</div>
 				</div>
-				{/* ) : (
-					<div>
-						<ReservationConfirm />
-					</div>
-				)} */}
 			</Container>
+
+			<Features />
+			<br></br>
+			<Leaflet />
+			<br></br>
 			<Footer />
 		</>
 	);

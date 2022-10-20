@@ -61,7 +61,7 @@ export const ReservationForm = () => {
 								// onChange={(e) => setNumber(e.target.value)}
 							></input>
 						</label>
-						<p> {errors?.lastName?.message}</p>
+						<p className="Error"> {errors?.lastName?.message}</p>
 
 						<label>
 							Enter your e-mail
@@ -72,7 +72,7 @@ export const ReservationForm = () => {
 								placeholder='"your@email.com"'
 							></input>
 						</label>
-						<p> {errors?.email?.message}</p>
+						<p className="Error"> {errors?.email?.message}</p>
 						<label>
 							Enter your street name
 							<input
@@ -82,7 +82,7 @@ export const ReservationForm = () => {
 								placeholder='"Peachy street"'
 							></input>
 						</label>
-						<p> {errors?.address1?.message}</p>
+						<p className="Error"> {errors?.address1?.message}</p>
 						<label>
 							Enter an optional address line.
 							<input
@@ -90,7 +90,7 @@ export const ReservationForm = () => {
 								placeholder='"Building 101"'
 							></input>
 						</label>
-						<p> {errors?.address2?.message}</p>
+						<p className="Error"> {errors?.address2?.message}</p>
 						<label>
 							Enter your house number.
 							<input
@@ -107,9 +107,9 @@ export const ReservationForm = () => {
 								// onChange={(e) => setNumber(e.target.value)}
 							></input>
 						</label>
-						<p> {errors?.houseNumber1?.message}</p>
+						<p className="Error"> {errors?.houseNumber1?.message}</p>
 						<label>
-							Enter a optional addition to your house number like "B" or 12.
+							Enter a optional addition to house number like "B" or 12.
 							<input
 								{...register("houseNumber2", {})}
 								placeholder="'B' or '12'"
@@ -134,7 +134,7 @@ export const ReservationForm = () => {
 								// onChange={(e) => setNumber(e.target.value)}
 							></input>
 						</label>
-						<p> {errors?.postalCode?.message}</p>
+						<p className="Error"> {errors?.postalCode?.message}</p>
 						<label>
 							Choose your country.
 							<select
@@ -182,7 +182,7 @@ export const ReservationForm = () => {
 										placeholder='"Gasthaus Moser"'
 									></input>
 								</label>
-								<p> {errors?.businessName?.message}</p>
+								<p className="Error"> {errors?.businessName?.message}</p>
 								<label>
 									Enter your company's business tax nr. for the invoice.
 									<input
@@ -190,7 +190,7 @@ export const ReservationForm = () => {
 										placeholder='"3012034567890"'
 									></input>
 								</label>
-								<p> {errors?.businessTaxNr?.message}</p>
+								<p className="Error"> {errors?.businessTaxNr?.message}</p>
 							</div>
 						) : (
 							""

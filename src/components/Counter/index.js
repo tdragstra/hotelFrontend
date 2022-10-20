@@ -80,7 +80,7 @@ export const Counter = () => {
 							{() => {
 								setEdit(false);
 							}}
-							x
+							X
 						</Button>
 					</div>
 				</>

@@ -13,7 +13,7 @@ export const userSlice = createSlice({
 		loginSuccess: (state, action) => {
 			localStorage.setItem("token", action.payload.token);
 			state.token = action.payload.token;
-			state.profile = action.payload;
+			state.profile = action.payload.user1;
 		},
 		logOut: (state, action) => {
 			localStorage.removeItem("token");

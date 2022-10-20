@@ -12,9 +12,11 @@ import {
 
 export const fetchFeatures = () => {
 	return async (dispatch, getState) => {
+		dispatch(appLoading);
 		try {
 			const response = await axios.get(`${apiUrl}/admin/features`);
 			dispatch(featuresFetched(response.data));
+			dispatch(appDoneLoading);
 		} catch (e) {
 			console.log("error", e.message);
 		}
@@ -23,14 +25,16 @@ export const fetchFeatures = () => {
 
 export const createFeature = (data) => {
 	return async (dispatch, getState) => {
+		dispatch(appLoading);
 		try {
 			const response = await axios.post(
 				`${apiUrl}/admin/features/create`,
 				data
 			);
-			console.log(response.data);
+
 			dispatch(featureCreated(response.data.feature));
 			dispatch(showMessageWithTimeout("success", true, response.data.message));
+			dispatch(appDoneLoading);
 		} catch (e) {
 			console.log("error", e.message);
 		}
@@ -39,6 +43,7 @@ export const createFeature = (data) => {
 
 export const deleteFeature = (id) => {
 	return async (dispatch, getState) => {
+		dispatch(appLoading);
 		try {
 			const response = await axios.delete(
 				`${apiUrl}/admin/features/delete/${id}`
@@ -49,8 +54,9 @@ export const deleteFeature = (id) => {
 			// 		showMessageWithTimeout("danger", true, "Feature ID not found")
 			// 	);
 			// }
-			dispatch(featureCreated(response.data.feature));
+			dispatch(featureDeleted(response.data.feature));
 			dispatch(showMessageWithTimeout("success", true, response.data.message));
+			dispatch(appDoneLoading);
 		} catch (e) {
 			if (e.response) {
 				// If its a non 2xx status code
@@ -73,11 +79,13 @@ export const deleteFeature = (id) => {
 
 export const fetchReservations = () => {
 	return async (dispatch, getState) => {
+		dispatch(appLoading);
 		try {
 			const response = await axios.get(`${apiUrl}/admin/reservations`);
 
 			console.log(response.data);
 			dispatch(reservationsFetched(response.data));
+			dispatch(appDoneLoading);
 		} catch (e) {
 			console.log("error", e.message);
 		}

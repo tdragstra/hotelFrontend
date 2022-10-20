@@ -7,6 +7,8 @@ import { loginSuccess, logOut, tokenStillValid } from "./slice";
 import { spaceUpdated, reservationSuccess, storyDeleteSuccess } from "./slice";
 
 import myAxios from "../../axios";
+import { Navigate } from "react-router-dom";
+import { changePage } from "../admin/slice";
 
 export const signUp = (name, email, password) => {
 	return async (dispatch, getState) => {
@@ -61,6 +63,9 @@ export const login = (email, password) => {
 				loginSuccess({ token: response.data.token, user: response.data.user })
 			);
 			dispatch(showMessageWithTimeout("success", false, "welcome back!", 1500));
+			if (response.data.user.isAdmin === true)
+				dispatch(changePage("reservations"));
+
 			dispatch(appDoneLoading());
 		} catch (error) {
 			if (error.response) {

@@ -8,9 +8,10 @@ import Nav from "react-bootstrap/Nav";
 export default function LoggedIn() {
 	const dispatch = useDispatch();
 	const user = useSelector(selectUser);
+	console.log(user);
 	return (
 		<>
-			<Nav.Item style={{ padding: ".5rem 1rem" }}>{user?.email}</Nav.Item>
+			<h6 style={{ padding: 50, color: "white" }}> {user?.user?.firstName}</h6>
 			<Button onClick={() => dispatch(logOut())}>Logout</Button>
 		</>
 	);

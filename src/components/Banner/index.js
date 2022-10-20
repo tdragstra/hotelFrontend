@@ -2,29 +2,45 @@ import { Carousel } from "react-bootstrap";
 
 function CarouselFadeExample() {
 	return (
-		<Carousel fade>
+		<Carousel
+			fade
+			style={{
+				width: "100%",
+				display: "flex",
+				justifyContent: "center",
+				alignContent: "center",
+				alignItems: "center",
+			}}
+		>
 			<Carousel.Item>
 				<img
 					className="d-block w-100"
 					src={require("../img/banner.png")}
-					style={{ maxHeight: 550, maxWidth: 4048 }}
 					alt="First slide"
+					style={{
+						maxHeight: "70%",
+					}}
 				/>
 				<Carousel.Caption>
-					<h1 style={{ color: "white" }}>Welcome to Weil am Rein</h1>
-					<p>Book fast and secure now!</p>
+					<h1 style={{ color: "white", fontSize: 80 }}>
+						Welcome to Weil am Rhein
+					</h1>
+					<p style={{ color: "white", fontSize: 25 }}>
+						Book fast and secure now!
+					</p>
 				</Carousel.Caption>
 			</Carousel.Item>
 			<Carousel.Item>
 				<img
 					className="d-block w-100"
 					src={require("../img/banner.png")}
-					style={{ maxHeight: 550 }}
 					alt="First slide"
 				/>
 				<Carousel.Caption>
-					<h1 style={{ color: "white" }}>Wilcome!</h1>
-					<p>Free 48 hour cancelation</p>
+					<h1 style={{ color: "white", fontSize: 80 }}>Wilcome!</h1>
+					<p style={{ color: "white", fontSize: 25 }}>
+						Free 48 hour cancelation
+					</p>
 				</Carousel.Caption>
 			</Carousel.Item>
 		</Carousel>

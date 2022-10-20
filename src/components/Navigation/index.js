@@ -3,42 +3,44 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectToken } from "../../store/user/selectors";
+import { selectToken, selectUser } from "../../store/user/selectors";
 import NavbarItem from "./NavbarItem";
 import LoggedIn from "./LoggedIn";
 import LoggedOut from "./LoggedOut";
 import "./index.css";
 export default function Navigation() {
 	const token = useSelector(selectToken);
+	const profile = useSelector(selectUser);
 
 	const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
 
 	return (
 		<Navbar
+			className="nav"
 			style={{
-				backgroundColor: "black",
 				width: "100%",
+				height: "60px",
 				display: "flex",
-				flexDirection: "row-reverse",
+				flexDirection: "row",
+				justifyContent: "space-between",
 			}}
 		>
-			<Navbar.Brand as={NavLink} to="/">
-				Gasthaus Moser
-			</Navbar.Brand>
-			<Navbar.Toggle aria-controls="basic-navbar-nav" />
-			<Navbar.Collapse id="basic-navbar-nav">
-				<Nav
-					fill
-					style={{
-						backgroundColor: "",
-						width: "50%",
-					}}
-				>
+			<div style={{ display: "flex" }}>
+				<Navbar.Brand as={NavLink} to="/" style={{ paddingLeft: 10 }}>
+					Hotel Moser
+				</Navbar.Brand>
+				<Nav fill>
 					<NavbarItem path="/" linkText="Home" />
-					{token ? <NavbarItem path="/myspace" linkText="My Space" /> : null}
-					{loginLogoutControls}
+					{token ? (
+						<NavbarItem path="/myreservations" linkText="My reservations" />
+					) : null}
 				</Nav>
-			</Navbar.Collapse>
+			</div>
+			<div>
+				<div style={{ marginRight: 25, display: "flex" }}>
+					{loginLogoutControls}
+				</div>
+			</div>
 		</Navbar>
 	);
 }

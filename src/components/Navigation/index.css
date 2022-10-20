@@ -1,8 +1,21 @@
 .nav {
-    background-color: #403d3d;
+    background-color: #4b566b;
     color: #ffff
 }
 
 .NavBar.brand {
     color: #ffff;
+}
+
+.NavBar.item {
+    color: #ffff;
+}
+
+.a.Button.Link {
+
+    color: white;
+}
+
+.Button.link {
+    color: white
 }

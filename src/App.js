@@ -30,9 +30,16 @@ function App() {
 	return (
 		<div className="app">
 			{pathname === "/" && <Navigation />}
+			{pathname === "/login" && <Navigation />}
+			{pathname === "/myreservations" && <Navigation />}
 
-			{pathname === "/" && <CarouselFadeExample />}
-			<MessageBox />
+			{pathname === "/myreservations" && <CarouselFadeExample wrap="true" />}
+			{pathname === "/" && <CarouselFadeExample wrap="true" />}
+
+			{pathname === "/" && <MessageBox />}
+			{pathname === "/login" && <MessageBox />}
+			{pathname === "/myreservations" && <MessageBox />}
+
 			{isLoading ? <Loading /> : null}
 			<Routes>
 				<Route exact path="/" element={<Hotel />} />

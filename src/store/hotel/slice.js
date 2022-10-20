@@ -3,13 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	hotelConfig: {},
 	rooms: [],
-	guests: { total: 1, adults: 1, children: 0 },
-	requests: {
-		singleBeds: false,
-		requestBalcony: false,
-		requestGroundFloor: false,
+
+	reservationData: {
+		rooms: [],
+		user: {},
+		guests: { total: 1, adults: 1, children: 0 },
+		requests: {
+			singleBeds: false,
+			requestBalcony: false,
+			requestGroundFloor: false,
+		},
+		arrivalTime: "15:00:00",
 	},
-	reservationData: { rooms: [], user: {} },
 	step: "reservation",
 };
 
@@ -25,37 +30,39 @@ export const hotelSlice = createSlice({
 			state.hotelConfig = action.payload;
 		},
 		incrementA: (state, action) => {
-			state.guests.adults += 1;
-			state.guests.total += 1;
+			state.reservationData.guests.adults += 1;
+			state.reservationData.guests.total += 1;
 		},
 		decrementA: (state, action) => {
-			if (state.guests.adults !== 0) {
-				state.guests.adults -= 1;
+			if (state.reservationData.guests.adults !== 0) {
+				state.reservationData.guests.adults -= 1;
 			}
-			if (state.guests.total !== 0) {
-				state.guests.total -= 1;
+			if (state.reservationData.guests.total !== 0) {
+				state.reservationData.guests.total -= 1;
 			}
 		},
 		incrementC: (state, action) => {
-			state.guests.children += 1;
-			state.guests.total += 1;
+			state.reservationData.guests.children += 1;
+			state.reservationData.guests.total += 1;
 		},
 		decrementC: (state, action) => {
-			if (state.guests.children !== 0) {
-				state.guests.children -= 1;
+			if (state.reservationData.guests.children !== 0) {
+				state.reservationData.guests.children -= 1;
 			}
-			if (state.guests.total !== 0) {
-				state.guests.total -= 1;
+			if (state.reservationData.guests.total !== 0) {
+				state.reservationData.guests.total -= 1;
 			}
 		},
 		changeSingle: (state, action) => {
-			state.requests.singleBeds = !state.requests.singleBeds;
+			state.reservationData.requests.singleBeds = !state.requests.singleBeds;
 		},
 		changeBalcony: (state, action) => {
-			state.requests.requestBalcony = !state.requests.requestBalcony;
+			state.reservationData.requests.requestBalcony =
+				!state.requests.requestBalcony;
 		},
 		changeGroundFloor: (state, action) => {
-			state.requests.requestGroundFloor = !state.requests.requestGroundFloor;
+			state.reservationData.requests.requestGroundFloor =
+				!state.requests.requestGroundFloor;
 		},
 		addDateReservation: (state, action) => {
 			state.reservationData = {
@@ -81,6 +88,15 @@ export const hotelSlice = createSlice({
 			state.reservationData = {
 				...state.reservationData,
 				user: action.payload,
+			};
+		},
+		addArrivalTime: (state, action) => {
+			state.reservationData.arrivalTime = action.payload;
+		},
+		addPassword: (state, action) => {
+			state.reservationData = {
+				...state.reservationData,
+				user: { ...state.reservationData.user, password: action.payload },
 			};
 		},
 		updateStep: (state, action) => {
@@ -116,6 +132,8 @@ export const {
 	addRoomAndNumber,
 	addUserInfo,
 	updateStep,
+	addArrivalTime,
+	addPassword,
 } = hotelSlice.actions;
 
 export default hotelSlice.reducer;

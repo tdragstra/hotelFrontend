@@ -4,6 +4,7 @@ import { roomsFetched } from "./slice";
 import { reservationsFetched } from "../admin/slice";
 import { reservationSuccess, loginSuccess } from "../user/slice";
 import { showMessageWithTimeout } from "../appState/actions";
+import { appDoneLoading, appLoading } from "../appState/slice";
 
 export const fetchAllRooms = () => {
 	return async (dispatch, getState) => {
@@ -17,13 +18,15 @@ export const fetchAllRooms = () => {
 	};
 };
 export const postNewReservation = (e) => async (dispatch, getState) => {
+	dispatch(appLoading());
 	try {
 		const response = await axios.post(`${apiUrl}/createReservation`, { e });
 
 		dispatch(reservationSuccess(response.data.reservation));
-		dispatch(loginSuccess(response.data.user1));
+		dispatch(loginSuccess(response.data));
 		dispatch(showMessageWithTimeout("success", true, response.data.message));
-		console.log("data", response.data);
+		dispatch(appDoneLoading());
+
 		// console.log("data", response.data.user1);
 	} catch (e) {
 		console.log("erreur in je eur", e.message);
