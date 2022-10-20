@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import { login } from "../../store/user/actions";
-import { selectToken } from "../../store/user/selectors";
+import { selectToken, selectUser } from "../../store/user/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Col } from "react-bootstrap";
@@ -19,16 +19,22 @@ export default function AdminHome() {
 	const [password, setPassword] = useState("123");
 	const dispatch = useDispatch();
 	const token = useSelector(selectToken);
-	console.log(token);
+	const profile = useSelector(selectUser);
+
 	const page = useSelector(selectPage);
 	const { pathname } = useLocation();
 
 	const navigate = useNavigate();
+	console.log(profile);
 	const loginLogoutControls = token ? <LoggedIn /> : <LoggedOut />;
+
 	useEffect(() => {
-		if (token !== null) {
-			navigate("/");
+		if (profile) {
+			dispatch(changePage("reservations"));
+		} else {
+			dispatch(changePage("login"));
 		}
+
 		if (pathname === "/admin/reservations") {
 			dispatch(changePage("reservations"));
 		}
@@ -69,7 +75,6 @@ export default function AdminHome() {
 			}}
 		>
 			<Container>
-				<div>{loginLogoutControls}</div>
 				<Form as={Col} md={{ span: 6, offset: 3 }} className="mt-5">
 					<h1 className="mt-5 mb-5"> Login as administrator</h1>
 					<Form.Group controlId="formBasicEmail">

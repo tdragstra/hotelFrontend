@@ -1,5 +1,6 @@
 .App {
     box-sizing: border-box;
+    align-items: center;
     border: 2px solid #f00;
     background-color: #ffff;
 }

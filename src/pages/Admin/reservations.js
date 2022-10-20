@@ -11,6 +11,7 @@ import {
 import {
 	selectReservations,
 	selectFeatures,
+	selectPage,
 } from "../../store/admin/selectors";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
@@ -18,8 +19,14 @@ import Container from "react-bootstrap/Container";
 import Loading from "../../components/Loading";
 import { DetailsEditForm } from "../../components/DetailsEditForm";
 import "./index.css";
+import { logOut } from "../../store/user/slice";
+import { changePage } from "../../store/admin/slice";
+import { Link } from "react-router-dom";
+import { selectAppLoading } from "../../store/appState/selectors";
+import MessageBox from "../../components/MessageBox";
 
 export default function AdminReservations() {
+	const appLoading = useSelector(selectAppLoading);
 	const [location, setLocation] = useState(false);
 	const handleOnChange = (event) => {
 		setLocation({ value: event.target.value });
@@ -42,7 +49,7 @@ export default function AdminReservations() {
 		dispatch(fetchFeatures());
 	}, [dispatch]);
 	console.log("wtf", reservations);
-	if (!reservations) {
+	if (appLoading) {
 		return <Loading />;
 	}
 
@@ -56,6 +63,7 @@ export default function AdminReservations() {
 				marginBottom: 20,
 			}}
 		>
+			<MessageBox />
 			<div
 				style={{
 					backgroundColor: "white",
@@ -63,7 +71,46 @@ export default function AdminReservations() {
 					alignContent: "center",
 				}}
 			>
-				<h1> ADMIN </h1>
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "space-between",
+					}}
+				>
+					<h1> ADMIN </h1>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "space-between",
+						}}
+					>
+						<div
+							style={{
+								margin: 10,
+							}}
+						>
+							<Link to="/">
+								<Button displayName="Hi"> Back to website</Button>
+							</Link>
+						</div>
+						<div
+							style={{
+								margin: 10,
+							}}
+						>
+							<Button
+								onClick={() => {
+									dispatch(logOut());
+									dispatch(changePage("login"));
+								}}
+							>
+								Logout
+							</Button>
+						</div>
+					</div>
+				</div>
 				<hr></hr>
 				<br />
 				<div

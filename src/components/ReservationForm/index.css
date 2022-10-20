@@ -2,3 +2,8 @@ tr {
 
     border: 2px solid #f00;
 }
+
+.Error {
+    color: red;
+    font-weight: bold;
+}

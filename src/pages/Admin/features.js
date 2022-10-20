@@ -17,6 +17,7 @@ import { Button } from "react-bootstrap";
 import { emphasize } from "@mui/material";
 import { width } from "@mui/system";
 import Container from "react-bootstrap/Container";
+import MessageBox from "../../components/MessageBox";
 
 export default function AdminFeatures() {
 	const [location, setLocation] = useState(false);
@@ -51,6 +52,7 @@ export default function AdminFeatures() {
 				marginBottom: 20,
 			}}
 		>
+			<MessageBox />
 			<div
 				style={{
 					backgroundColor: "white",
@@ -106,7 +108,7 @@ export default function AdminFeatures() {
 											>
 												Location
 											</option>
-											<option value="feature">Feature</option>
+											<option value="features">Feature</option>
 											<option value="house rules">House rules</option>
 										</select>
 										<p> {errors?.type?.message}</p>
